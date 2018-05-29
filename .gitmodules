@@ -1,0 +1,3 @@
+[submodule "modules/gkvs-java"]
+	path = modules/gkvs-java
+	url = https://github.com/gkvs/gkvs-java

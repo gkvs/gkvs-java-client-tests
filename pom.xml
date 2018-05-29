@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>rocks.gkvs</groupId>
+  <artifactId>gkvs-java-tests</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>gKVS Java Client Tests</name>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <developers>
+    <developer>
+      <id>alexshvid</id>
+      <name>Alex Shvid</name>
+      <email>a@shvid.com</email>
+    </developer>
+  </developers>   
+  
+  <profiles>
+  
+	<profile>
+	    <id>deps</id>
+        
+        <build>
+	        <plugins>
+		      <plugin>
+		        <artifactId>maven-assembly-plugin</artifactId>
+		        <version>2.4.1</version>
+		        <configuration>
+		          <appendAssemblyId>false</appendAssemblyId>
+		          <finalName>${project.artifactId}</finalName>
+		          <descriptors>
+		            <descriptor>assembly.xml</descriptor>
+		          </descriptors>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <id>make-assembly</id>
+		            <phase>install</phase>
+		            <goals>
+		              <goal>attached</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>	        
+	        </plugins>
+        </build>
+	
+	</profile>        
+  
+  
+  </profiles>
+  
+  
+  <dependencies>
+  
+    <dependency>
+	  <groupId>rocks.gkvs</groupId>
+	  <artifactId>gkvs-java</artifactId>
+	  <version>${project.version}</version>
+    </dependency> 
+
+    <!-- TEST -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>      
+  
+  </dependencies>
+
+  <build>
+  
+    <resources>
+      <resource>
+        <directory>modules/gkvs-java/src/test/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>  
+  
+    <plugins>
+    
+     <plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>build-helper-maven-plugin</artifactId>
+         <version>1.9.1</version>
+         <executions>
+             <execution>
+                 <phase>generate-sources</phase>
+                 <goals><goal>add-test-source</goal></goals>
+                 <configuration>
+                     <sources>
+                         <source>modules/gkvs-java/src/test/java</source>                          
+                     </sources>
+                 </configuration>
+             </execution>                
+         </executions>
+     </plugin>     
+    
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.8</version>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+          <wtpversion>2.0</wtpversion>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <testSource>1.7</testSource>
+          <testTarget>1.7</testTarget>          
+        </configuration>
+      </plugin>
+      
+<!--       <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.21.0</version>
+          <configuration>
+              <parallel>all</parallel>
+              <threadCount>4</threadCount>
+              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          </configuration>
+          <dependencies>
+              <dependency>
+                  <groupId>org.apache.maven.surefire</groupId>
+                  <artifactId>surefire-junit47</artifactId>
+                  <version>2.21.0</version>
+              </dependency>
+          </dependencies>
+      </plugin>     -->  
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Build-Id>${project.name}-${project.version}-${maven.build.timestamp}</Build-Id>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+           
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+              <version>3.0.0</version>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>  
+      </plugins>
+  </build>
+</project>
